@@ -46,10 +46,10 @@ def search(query: str, endpoint:str = DEFAULT_ENDPOINT, client: GhApi = None) ->
   search_config = {
     'users': client.search.users,
     'code': client.search.code,
-    'issues': client.search.issues,
+    #'issues': client.search.issues,
     'commits': client.search.commits,
-    'labels': client.search.lables,
-    'repositories': client.search.repositories,
+    'labels': client.search.labels,
+    #'repositories': client.search.repositories,
     'topics': client.search.topics
   }
 
@@ -60,7 +60,7 @@ def search(query: str, endpoint:str = DEFAULT_ENDPOINT, client: GhApi = None) ->
     logger.debug("Current Rate Limits: %s",
                  rate_limits.get_rate_limits('search'))
     rate_limits.check_safety("search")
-    yield results.get('items', default=[])
+    yield results.get('items', [])
 
 
 def query_builder(query=None, scope=None, target=None):
@@ -84,19 +84,16 @@ def cli_entry():
   parser = argparse.ArgumentParser(
     description='Search for things in GitHub')
 
-
   parser.add_argument(
     '-v',
     '--version',
     action='version',
     version='%(prog)s 0.0.1')
 
-
   parser.add_argument(
     '--debug',
     action='store_true',
     help='Set this if you would like to see verbose logging.')
-
 
   parser.add_argument(
     '-e',
@@ -104,15 +101,14 @@ def cli_entry():
     choices=[
       'users',
       'code',
-      'issues',
+      #'issues',
       'commits',
       'labels',
-      'repositories',
+      #'repositories',
       'topics'
     ],
     default=DEFAULT_ENDPOINT,
     help='Endpoint you would like to search')
-
 
   parser.add_argument(
     '-q',
@@ -120,7 +116,6 @@ def cli_entry():
     required=True,
     nargs='+',
     help='Query you would like to use to search')
-
 
   args = parser.parse_args()
 
