@@ -1,35 +1,27 @@
 # GitHub Searcher
-GH Ripper is a utility for doing mass updates to github repos. It will find and replace text in any number of repositories and can commit them up to a new branch automatically. 
+ghsearcher is a utility for searching GitHub from the command line.
 
 ## Usage
 
-1. Install with pip `pip install ghripper`
+1. Install with pip `pip install ghsearcher`
 2. (Optional) you can either export an environment variable named "GH_TOKEN" or include it in a local .env file to ensure you can make the most requests. See ["Creating a personal access token"](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) for more information on how to do so.
 
 ```
-usage: ghdorker [-h] [-v] [-s {repo,user,org}] [-d DORKS] [--debug] [-o OUTPUT_FILENAME] [--options INPUT_OPTION [INPUT_OPTION ...]] search
+usage: ghsearcher [-h] [-v] [--debug] [-e {users,code,issues,commits,labels,repositories,topics}] -q QUERY [QUERY ...]
 
-Search github for github dorks
-
-positional arguments:
-  search                The repo, username, or organization you would like to search
+Search for things in GitHub
 
 optional arguments:
   -h, --help            show this help message and exit
   -v, --version         show program's version number and exit
-  -s {repo,user,org}, --scope {repo,user,org}
-                        The type of GitHub object you would like to search
-  -d DORKS, --dorks DORKS
-                        Github dorks file. Eg: dorks.txt/.yaml
   --debug               Set this if you would like to see verbose logging.
-  -o OUTPUT_FILENAME, --outputFile OUTPUT_FILENAME
-                        File to write results to. This overwrites the file provided! Accepts .json or .csv as output file types.
-  --options INPUT_OPTION [INPUT_OPTION ...]
-                        YAML Options to target for dorking for example: all.cloud.aws
-
-Use responsibly, Enjoy pentesting
+  -e {users,code,issues,commits,labels,repositories,topics}, --endpoint {users,code,issues,commits,labels,repositories,topics}
+                        Endpoint you would like to search
+  -q QUERY [QUERY ...], --query QUERY [QUERY ...]
+                        Query you would like to use to search
 ```
 
+<!--
 Here is a simple example:
 ```
 # The source is a repo and it is running against the gh_dorks_test.txt file
@@ -40,7 +32,7 @@ Additionally you can create a yaml config file like so for using only specific d
 ```yaml
 dtaivpp/cloud_haiku:
   scope: repo, org, user
-  find: "Testing code long time" 
+  find: "Testing code long time"
   replace_with: "NO"
   branch_name: "GHRipper_Replacement"
   commit_message: "Testing code long time -> NO"
@@ -120,3 +112,4 @@ Reference points for creating GitDorker and compiling dorks lists
 
 - [@techgaun](https://github.com/techgaun/github-dorks) - This was the primary repo I was looking to for inspiration when writing this dorker
 - [@obheda12](https://github.com/obheda12/GitDorker) - You have one of the cleanest README's ive read in a while and if you couldn't tell has inspired much of this project's structure
+-->
