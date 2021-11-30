@@ -88,7 +88,7 @@ def cli_entry():
     '-v',
     '--version',
     action='version',
-    version='%(prog)s 0.0.1')
+    version='%(prog)s 0.0.2')
 
   parser.add_argument(
     '--debug',

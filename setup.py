@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="ghsearcher",
-    version='0.0.1',
+    version='0.0.2',
     author="David Tippett",
     description="A tool for searching GitHub",
     license='Apache Software License',
