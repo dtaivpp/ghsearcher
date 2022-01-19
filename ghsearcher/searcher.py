@@ -46,10 +46,10 @@ def search(query: str, endpoint:str = DEFAULT_ENDPOINT, client: GhApi = None) ->
   search_config = {
     'users': client.search.users,
     'code': client.search.code,
-    #'issues': client.search.issues,
+    'issues': client.search.issues_and_pull_requests,
     'commits': client.search.commits,
     'labels': client.search.labels,
-    #'repositories': client.search.repositories,
+    'repos': client.search.repos,
     'topics': client.search.topics
   }
 
@@ -101,10 +101,10 @@ def cli_entry():
     choices=[
       'users',
       'code',
-      #'issues',
+      'issues',
       'commits',
       'labels',
-      #'repositories',
+      'repos',
       'topics'
     ],
     default=DEFAULT_ENDPOINT,
@@ -125,10 +125,12 @@ def cli_entry():
   client = get_client()
 
   results = []
-  for query in args.querys:
+  for query in args.query:
     tmp = search(query, args.endpoint, client)
-    pprint(tmp)
-    results.extend(tmp)
+    # Broken Functionality - Need to iterate over generator
+    for item in tmp:
+      pprint(item)
+      results.extend(item)
 
 
 if __name__=='__main__':
