@@ -7,4 +7,4 @@ def test_search():
   for result in results:
     final_result.extend(result)
 
-  assert len(final_result) >= 5
+  assert len(final_result) > 0

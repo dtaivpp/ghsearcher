@@ -7,7 +7,9 @@ ghsearcher is a utility for searching GitHub from the command line.
 2. (Optional) you can either export an environment variable named "GH_TOKEN" or include it in a local .env file to ensure you can make the most requests. See ["Creating a personal access token"](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) for more information on how to do so.
 
 ```
-usage: ghsearcher [-h] [-v] [--debug] [-e {users,code,issues,commits,labels,repositories,topics}] -q QUERY [QUERY ...]
+usage: ghsearcher [-h] [-v] [--debug]
+                  [-e {users,code,issues,commits,labels,repos,topics}] [-o OUTPUT_FILE]
+                  -q QUERY [QUERY ...]
 
 Search for things in GitHub
 
@@ -15,8 +17,12 @@ optional arguments:
   -h, --help            show this help message and exit
   -v, --version         show program's version number and exit
   --debug               Set this if you would like to see verbose logging.
-  -e {users,code,issues,commits,labels,repositories,topics}, --endpoint {users,code,issues,commits,labels,repositories,topics}
+  -e {users,code,issues,commits,labels,repos,topics}, --endpoint {users,code,issues,commits,labels,repos,topics}
                         Endpoint you would like to search
+  -o OUTPUT_FILE, --output-file OUTPUT_FILE
+                        File name for where you want the JSON output to go. eg:
+                        output/test will output a file in the output dir with the file
+                        name test-2022-01-01.json
   -q QUERY [QUERY ...], --query QUERY [QUERY ...]
                         Query you would like to use to search
 ```

@@ -1,6 +1,10 @@
+from os.path import exists
+from os import remove
 from ghsearcher import helpers
 from ghsearcher.searcher import get_client
 from datetime import datetime
+from datetime import date
+
 
 def test_Limit_step():
   limit = helpers.Limit(
@@ -24,3 +28,12 @@ def test_RateLimiter():
 
   # There should be more than one Limit attribute on the RateLimiter class
   assert len(att_list) >= 4
+
+
+def test_output_json_file():
+  todays_date = date.today()
+  expected_filename = f"test-{todays_date}.json"
+  helpers.output_json_file("test", {"key": "value"})
+
+  assert exists(expected_filename)
+  remove(expected_filename)

@@ -1,10 +1,10 @@
 """
 Helper functions/classes for ghdorker
 """
-from datetime import datetime
+from datetime import datetime, date
 from time import sleep
+import json
 import logging
-
 
 logger = logging.getLogger("debug")
 
@@ -82,6 +82,20 @@ class RateLimiter:
       self.initialize_limits()
 
     rate_limit.step()
+
+
+def output_json_file(file, data):
+  """Helper function to output data to JSON file
+
+  Parameters:
+  file_path: File Path and Name
+  data: JSON Serializable Data
+
+  Returns:
+  None
+  """
+  with open(f"{file}-{date.today()}.json", "+w") as f:
+    json.dump(data, f)
 
 
 def paginator(operation, per_page=30, page=1, **kwargs):

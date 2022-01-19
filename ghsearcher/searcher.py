@@ -5,7 +5,8 @@ from pprint import pprint
 from dotenv import load_dotenv
 from ghapi.all import GhApi
 from ghsearcher.helpers import RateLimiter
-from ghsearcher.helpers import paginator
+from ghsearcher.helpers import paginator, output_json_file
+from fastcore.xtras import obj2dict
 
 
 load_dotenv()
@@ -63,22 +64,6 @@ def search(query: str, endpoint:str = DEFAULT_ENDPOINT, client: GhApi = None) ->
     yield results.get('items', [])
 
 
-def query_builder(query=None, scope=None, target=None):
-  full_query = [
-    query,
-    reduce_scope(scope, target)
-  ]
-
-  return " ".join(full_query)
-
-
-def reduce_scope(scope, target) -> str:
-  if scope != None and target != None:
-    return f"{scope}: {target}"
-
-  return ""
-
-
 def cli_entry():
   """Parse arguments and kickoff the process"""
   parser = argparse.ArgumentParser(
@@ -88,7 +73,7 @@ def cli_entry():
     '-v',
     '--version',
     action='version',
-    version='%(prog)s 0.0.2')
+    version='%(prog)s 0.0.3')
 
   parser.add_argument(
     '--debug',
@@ -111,6 +96,12 @@ def cli_entry():
     help='Endpoint you would like to search')
 
   parser.add_argument(
+    '-o',
+    '--output-file',
+    help='File name for where you want the JSON output to go. eg: output/test \n' +
+          'will output a file in the output dir with the file name test-2022-01-01.json')
+
+  parser.add_argument(
     '-q',
     '--query',
     required=True,
@@ -126,11 +117,16 @@ def cli_entry():
 
   results = []
   for query in args.query:
-    tmp = search(query, args.endpoint, client)
+    search_gen = search(query, args.endpoint, client)
     # Broken Functionality - Need to iterate over generator
-    for item in tmp:
-      pprint(item)
-      results.extend(item)
+    for result_page in search_gen:
+      tmp_result = [ obj2dict(result) for result in result_page.items]
+      results.extend(tmp_result)
+
+  if args.output_file != None:
+    output_json_file(args.output_file, results)
+  else:
+    pprint(results)
 
 
 if __name__=='__main__':
