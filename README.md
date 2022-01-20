@@ -27,6 +27,18 @@ optional arguments:
                         Query you would like to use to search
 ```
 
+To learn about building queries you can check the following documentaiton for GitHubs search queries:
+
+https://docs.github.com/en/rest/reference/search#constructing-a-search-query
+
+
+Here is a simple example. The Kafka project is trying to better track if users are having issues with implementing their kafka into thier project so the create a data pipeline with the following to find issues in other repos featuring Kafka.
+
+This example finds all issues including "Kafka" created on or after 2022-01-18 and outputting it to kafka_output_file-(todays date).json
+```
+# The source is a repo and it is running against the gh_dorks_test.txt file
+ghsearcher -e issues -q "Kafka created:>2022-01-18" -o kafka_output_file
+```
 <!--
 Here is a simple example:
 ```
