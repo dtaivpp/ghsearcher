@@ -110,9 +110,10 @@ def paginator(operation, per_page=30, page=1, **kwargs):
   Returns:
   Attribute Dict: A list of dictionary objects containing the results returned
   """
-  incomplete = True
-  while incomplete:
+  out_of_items = False
+  while not out_of_items:
     result = operation(**kwargs, per_page=per_page, page=page)
-    incomplete = result['incomplete_results']
-    yield result
-    page += 1
+    if len(result['items']) != 0:
+      yield result
+      page += 1
+    else: out_of_items = True
